@@ -8,7 +8,8 @@ from tensorflow import keras
 from keras import layers
 from .attention import PositionalEncoding, TransformerBlock
 
-# cnn+transformer hybrid model
+# cnn+transformer hybrid model. AI was used to help primarily with function definitions.
+# this was our initial model
 class CNNTransformerHybrid(keras.Model):
     """
     Hybrid architecture combining CNN and Transformer.
@@ -27,7 +28,7 @@ class CNNTransformerHybrid(keras.Model):
         d_model: int = 128,      
         num_heads: int = 8,      
         num_transformer_layers: int = 2,
-        name: str = 'CNNTransformerHybrid'
+        name: str = 'CNNTransformerHybrid' # ** kwargs??
     ):
         super().__init__(name=name)
         
