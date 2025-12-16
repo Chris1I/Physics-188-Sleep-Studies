@@ -40,14 +40,12 @@ class PositionalEncoding(layers.Layer):
         returns:
             - tensorflow constant representing the positional encoding of the sequence as a length x d_model array
         """
-        position = np.arange(self.length)[:, np.newaxis]
-        div_term = np.exp(np.arange(0, self.d_model, 2) * - (np.log(10000.0) / self.d_model))
+        position = np.arange(length)[:, np.newaxis]
+        div_term = np.exp(np.arange(0, d_model, 2) * -(np.log(10000.0) / d_model))
+        pe = np.zeros((length, d_model))
 
-        pe = np.zeros((self.length, self.d_model))
-
-        pe[0::2] = np.sin(position * div_term)
-        pe[1::2] = np.cos(position * div_term)
-
+        pe[:, 0::2] = np.sin(position * div_term)  # Even dimensions
+        pe[:, 1::2] = np.cos(position * div_term)  # Odd dimensions
         return tf.constant(pe, dtype=tf.float32)
     
     def call(self, x):
@@ -55,9 +53,7 @@ class PositionalEncoding(layers.Layer):
         return x + self.pos_encoding
 
 
-# ============================================================
 # MULTI-HEAD ATTENTION
-# ============================================================
 class MultiHeadAttention(layers.Layer):
     """
     Multi-head self-attention mechanism.
@@ -123,16 +119,22 @@ class MultiHeadAttention(layers.Layer):
         d_k = tf.cast(self.head_dim, tf.float32)
 
         # attn
-        softmax = tf.nn.softmax(tf.matmul(Qh, Kh, transpose = True) / tf.math.sqrt(d_k), axis = -1)
+        softmax = tf.nn.softmax(tf.matmul(Qh, Kh, transpose_b = True) / tf.math.sqrt(d_k), axis = -1)
 
-        attn = tn.matmul(softmax, Vh)
+        attn = tf.matmul(softmax, Vh)  # (batch, num_heads, seq_len, head_dim)
+    
+        # Transpose to (batch, seq_len, num_heads, head_dim)
+        attn = tf.transpose(attn, perm=[0, 2, 1, 3])
+        
+        # Reshape to (batch, seq_len, d_model)
+        attn = tf.reshape(attn, shape=[batch_size, -1, self.d_model])
+        
+        # Apply output projection
+        output = self.dense(attn)
+        return output
 
-        return attn
 
-
-# ============================================================
 # TRANSFORMER BLOCK
-# ============================================================
 class TransformerBlock(layers.Layer):
     """
     Single transformer encoder block.
