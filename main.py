@@ -16,7 +16,7 @@ def extract_participant(person_array):
     X = []
     y = []
     for row in person_array: # each person will be listed as person[x].npy in the data set. first 7 are training, 8&9 are test, 10&11 are validation
-        channels = np.stack(row[1:10], axis=-1)  # → (3000, 9)
+        channels = np.stack(row[1:10], axis=-1)  # (3000, 9)
         X.append(channels)
         y.append(row[10])
 
@@ -63,7 +63,7 @@ def load_test_data():
 
 def main():
 
-    # -----------------------------
+    # this was for our initial cnn/transform
     X_train, y_train = load_training_data()
     X_test, y_test = load_test_data()
 
@@ -75,7 +75,7 @@ def main():
     )
 
 
-    print("\nEvaluating on test subjects...")
+    print("\nEvaluating on test subjects")
     loss, acc = model.evaluate(X_test, y_test)
     print(f"\nFinal Test Accuracy: {acc:.4f}")
 
