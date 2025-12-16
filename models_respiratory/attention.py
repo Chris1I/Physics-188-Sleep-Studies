@@ -3,7 +3,7 @@ models/attention.py
 
 Transformer attention mechanisms for sleep apnea detection
 
-Using transformer details outlined in lecture
+Using transformer details outlined in lecture. Used gemini to help outline the architecture
 """
 
 import tensorflow as tf
@@ -200,4 +200,5 @@ class TransformerBlock(layers.Layer):
         ffn_output = self.dropout2(ffn_output, training = training)
         x = self.layernorm2(x+ffn_output)
         
+
         return x
