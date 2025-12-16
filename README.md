@@ -2,33 +2,13 @@
 
 Using the DREAMT: Dataset for Real-time sleep stage EstimAtion using Multisensor wearable Technology, we interpret the data to find possible underlying causes of sleep apnea and possibly more.
 
-We use 9 features: 4 EEG, 1 ECG, 4 Respiratory
-
-Physics features:
-input: ['ECG', 'Central_Apnea', 'BVP', 'PTAF', 'THORAX', 'Sleep_Stage']
-----> outputs: normalized data frame of features: test, train, val 
-
-features:
-#hrv
-'RMSSD'
-'SDNN'
-'mean_HR'
-
-#ptt
-'PTT_Mean'
-'PTT_STD'
-
-#morphology
-'Notch_Complexity'
-'Mayer_Power'
-
-#current sleep apnea label
-#note: using central apnea
-'label'
-
-#resp feats
-'Breath_Rate'
-'rrSTD'
-'Flow_Effort_Corr'
-'Flow_Effort_Ratio'
-'Flow_Dropout_Fraction'
+main.py - the initial cnn/transform model main()
+Randomforest.py - random forest training and evaluation
+ROCKET.py - rocket pipeline training & evaluation
+loading_data.py - creates the data for the models to process
+LeakyForest.py - Random forest training and evaluation improperly with pooled datasets
+Datasetmaker.py - Random forest training and evaluation improperly with pooled datasets
+Small_feature_data - contains train/test/val feature data of a small number of patients
+physics_features - contains respiratory and cardiovasular feature functions
+models - contains cnn-transformer hybrid model code
+CNN_MLP_Hybrid_Model - contains cnn-transformer-mlp hybrid model code
