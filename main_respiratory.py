@@ -1,7 +1,7 @@
 import numpy as np
 
-from models.train import train_model
-from models.cnn_base import CNNTransformerHybrid
+from models_respiratory.train import train_model
+from models_respiratory.cnn_base import CNNTransformerHybrid
 
 
 def extract_participant(person_array):

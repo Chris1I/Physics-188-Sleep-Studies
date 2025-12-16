@@ -46,15 +46,15 @@ def train_model(model, X_train, y_train, X_val, y_val, class_weights):
     model training function.
     returns model training history using model.fit keras method.
     """
-    # making sure /models directory exists for saving models
-    os.makedirs('models', exist_ok=True)
+    # making sure /models_respiratory directory exists for saving models
+    os.makedirs('models_respiratory', exist_ok=True)
     
     # using early stopping and saving best performing model by ModelCheckpoint 
     # Uses ReduceLROnPlateau to reduce learnign rate by half if validation loss stalls for 8 epochs to allow for fine tuning
     callbacks = [
         keras.callbacks.EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=True, verbose=1),
         keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=8, min_lr=1e-7, verbose=1),
-        keras.callbacks.ModelCheckpoint('models/best_model.keras', monitor='val_loss', save_best_only=True, verbose=1),
+        keras.callbacks.ModelCheckpoint('models_respiratory/best_model.keras', monitor='val_loss', save_best_only=True, verbose=1),
         keras.callbacks.TerminateOnNaN()
     ]
     
@@ -78,7 +78,7 @@ def main():
     print("Training...")
     history = train_model(model, X_train, y_train, X_val, y_val, class_weights)
     
-    print(f"Training complete. Best model saved to models/best_model.keras")
+    print(f"Training complete. Best model saved to models_respiratory/best_model.keras")
 
 if __name__ == '__main__':
     main()

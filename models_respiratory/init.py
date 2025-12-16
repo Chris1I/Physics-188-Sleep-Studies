@@ -1,5 +1,5 @@
 """
-models/__init__.py
+models_respiratory/__init__.py
 
 Package initialization for sleep apnea detection models
 """

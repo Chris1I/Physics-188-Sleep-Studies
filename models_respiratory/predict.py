@@ -19,7 +19,7 @@ def predict():
         'TransformerBlock': TransformerBlock,
         'MultiHeadAttention': MultiHeadAttention
     }
-    model = keras.models.load_model('models/best_model.keras', custom_objects=custom_objects)
+    model = keras.models.load_model('models_respiratory/best_model.keras', custom_objects=custom_objects)
     
     print("Loading test data...")
     X_test = np.load('processed_data/X_test.npy')
